@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mariah Trader | Comunidad gratuita en Telegram</title>
+<meta name="description" content="Una comunidad gratuita en Telegram para seguir los mercados, comentar gráficos y hacer preguntas con otros traders.">
+<meta name="theme-color" content="#0A0816">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%237C4DFF'/><text x='50' y='68' font-size='54' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'>M</text></svg>">
+
+<!-- ===== CONFIGURAÇÃO (só mexer aqui) ===== -->
+<script>
+var HL = {
+  PUBLIC_ID: 'e17be8f4-2862-4a6e-9ac7-7659acf8844e',
+  PIXEL_ID: '3189451951445489',
+  API: 'https://project--e7d2178c-e77d-4b1d-9bd2-b4492171c3d3.lovable.app/api/public',
+  EMERGENCY_LINK: ''
+};
+function hlGetCookie(n){
+  var m = document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)'));
+  return m ? decodeURIComponent(m[1]) : '';
+}
+function hlSetCookie(n, v){
+  document.cookie = n + '=' + v + '; max-age=7776000; path=/; SameSite=Lax' +
+    (location.protocol === 'https:' ? '; Secure' : '');
+}
+function hlId(){
+  try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID().replace(/-/g, ''); } catch(e){}
+  var s = ''; for (var i = 0; i < 32; i++) s += Math.floor(Math.random() * 16).toString(16); return s;
+}
+(function(){
+  try {
+    if (!hlGetCookie('_fbp')) hlSetCookie('_fbp', 'fb.1.' + Date.now() + '.' + Math.floor(Math.random() * 1e10));
+    var fbclid = new URLSearchParams(location.search).get('fbclid');
+    if (fbclid) {
+      var cur = hlGetCookie('_fbc');
+      if (!cur || cur.split('.').slice(3).join('.') !== fbclid) hlSetCookie('_fbc', 'fb.1.' + Date.now() + '.' + fbclid);
+    }
+  } catch(e){}
+})();
+HL.PV_ID = hlId();
+</script>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', HL.PIXEL_ID);
+fbq('track', 'PageView', {}, {eventID: HL.PV_ID});
+</script>
+<!-- End Meta Pixel Code -->
+
+<style>
+  :root{
+    --bg:#0A0816;
+    --bg-2:#150F2E;
+    --text:#EAF0FB;
+    --muted:#9AAACB;
+    --line:#251D47;
+    --blue:#7C4DFF;
+    --blue-soft:#B89DFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.5;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  /* Gráfico de fundo */
+  .bg{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(120% 70% at 85% 0%, #22134F 0%, var(--bg) 60%);
+  }
+  .bg svg{position:absolute;left:0;bottom:0;width:100%;height:62%}
+  .trend{
+    stroke-dasharray:1400;stroke-dashoffset:1400;
+    animation:draw 2.4s ease-out .2s forwards;
+  }
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @media (prefers-reduced-motion:reduce){
+    .trend{animation:none;stroke-dashoffset:0}
+  }
+
+  /* Conteúdo */
+  .wrap{
+    position:relative;z-index:1;
+    width:100%;max-width:640px;margin:0 auto;
+    padding:28px 22px 0;
+    min-height:100vh;min-height:100svh;
+    display:flex;flex-direction:column;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    font-weight:700;font-size:15px;letter-spacing:-.01em;
+  }
+  .brand-mark{
+    width:30px;height:30px;border-radius:9px;
+    background:var(--blue);color:#fff;
+    display:grid;place-items:center;font-size:16px;font-weight:800;
+  }
+  .hero{padding:9vh 0 40px;flex:1}
+  .tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:600;color:var(--blue-soft);
+    padding:6px 12px;border:1px solid #45328A;border-radius:999px;
+    background:rgba(124,77,255,.10);
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:#35D07F;box-shadow:0 0 0 3px rgba(53,208,127,.18)}
+  h1{
+    margin-top:18px;
+    font-size:clamp(32px,9vw,54px);
+    line-height:1.04;letter-spacing:-.035em;font-weight:800;
+    max-width:15ch;
+  }
+  .sub{
+    margin-top:16px;color:var(--muted);
+    font-size:clamp(16px,4.3vw,18px);max-width:36ch;
+  }
+  .telegram-cta{
+    margin-top:28px;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    width:100%;max-width:380px;min-height:58px;padding:0 24px;
+    background:var(--blue);color:#fff;text-decoration:none;
+    border:0;cursor:pointer;font-family:inherit;-webkit-appearance:none;appearance:none;
+    font-size:17px;font-weight:700;border-radius:14px;
+    box-shadow:0 10px 30px -8px rgba(124,77,255,.6);
+    transition:transform .15s ease, background .15s ease;
+  }
+  .telegram-cta:hover:not(:disabled){background:#8B61FF}
+  .telegram-cta:disabled{opacity:.75;cursor:progress}
+  .telegram-cta:active{transform:scale(.98)}
+  .telegram-cta:focus-visible{outline:3px solid var(--blue-soft);outline-offset:3px}
+  .telegram-cta svg{width:22px;height:22px;flex:none}
+  .note{margin-top:12px;font-size:13px;color:var(--muted)}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:22px 0 30px;
+    font-size:12px;line-height:1.6;color:#7C8CAD;
+    background:linear-gradient(to bottom, rgba(10,8,22,.6), var(--bg) 40%);
+  }
+  footer p+p{margin-top:10px}
+  footer strong{color:var(--muted)}
+
+  @media (min-width:760px){
+    .wrap{padding-top:40px}
+    .hero{padding-top:14vh}
+  }
+</style>
+</head>
+<body>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=3189451951445489&ev=PageView&noscript=1"
+/></noscript>
+
+<div class="bg" aria-hidden="true">
+  <svg viewBox="0 0 1000 400" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7C4DFF" stop-opacity=".22"/>
+        <stop offset="1" stop-color="#7C4DFF" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <g stroke="#1A1435" stroke-width="1">
+      <line x1="0" y1="100" x2="1000" y2="100"/>
+      <line x1="0" y1="200" x2="1000" y2="200"/>
+      <line x1="0" y1="300" x2="1000" y2="300"/>
+    </g>
+    <g stroke="#2F2366" stroke-width="2">
+      <line x1="120" y1="250" x2="120" y2="310"/><rect x="113" y="265" width="14" height="30" fill="#2F2366"/>
+      <line x1="260" y1="215" x2="260" y2="290"/><rect x="253" y="230" width="14" height="40" fill="#2F2366"/>
+      <line x1="400" y1="230" x2="400" y2="300"/><rect x="393" y="245" width="14" height="35" fill="#2F2366"/>
+      <line x1="540" y1="170" x2="540" y2="250"/><rect x="533" y="185" width="14" height="45" fill="#2F2366"/>
+      <line x1="680" y1="140" x2="680" y2="215"/><rect x="673" y="155" width="14" height="40" fill="#2F2366"/>
+      <line x1="820" y1="150" x2="820" y2="220"/><rect x="813" y="162" width="14" height="38" fill="#2F2366"/>
+      <line x1="950" y1="90" x2="950" y2="170"/><rect x="943" y="105" width="14" height="45" fill="#2F2366"/>
+    </g>
+    <path d="M0,320 L80,300 L160,310 L240,260 L320,275 L400,255 L480,265 L560,205 L640,215 L720,170 L800,185 L880,150 L1000,110 L1000,400 L0,400 Z" fill="url(#area)"/>
+    <path class="trend" d="M0,320 L80,300 L160,310 L240,260 L320,275 L400,255 L480,265 L560,205 L640,215 L720,170 L800,185 L880,150 L1000,110" fill="none" stroke="#9A7BFF" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+  </svg>
+</div>
+
+<div class="wrap">
+  <header class="brand">
+    <span class="brand-mark" aria-hidden="true">M</span>
+    Mariah Trader
+  </header>
+
+  <main class="hero">
+    <span class="tag"><span class="dot" aria-hidden="true"></span>Comunidad gratuita en Telegram</span>
+    <h1>Sigue los mercados con personas que también operan</h1>
+    <p class="sub">Análisis diario del mercado, lectura de gráficos y un espacio amable para hacer preguntas. Unirte es gratis y puedes salir cuando quieras.</p>
+
+    <button type="button" class="telegram-cta" id="main-telegram" disabled>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13.1l-4.8-1.5c-1-.3-1.1-1 .2-1.5L20.5 2.9c.9-.3 1.7.2 1.4 1.4z"/></svg>
+      <span class="cta-label">Únete a la comunidad en Telegram</span>
+    </button>
+    <p class="note" id="cta-note" aria-live="polite">Se abre en la app de Telegram. No se requiere ningún pago.</p>
+  </main>
+
+  <footer>
+    <p><strong>Advertencia de riesgo:</strong> Operar con forex, CFD, criptomonedas y otros productos apalancados conlleva un alto nivel de riesgo y puede no ser adecuado para todos los inversores. Puedes perder parte o la totalidad del capital invertido, por lo que nunca operes con dinero que no puedas permitirte perder. Los resultados pasados no son un indicador fiable de resultados futuros.</p>
+    <p>Todo el contenido compartido en esta página y en la comunidad tiene fines exclusivamente educativos e informativos y no constituye asesoramiento financiero, de inversión ni fiscal. Toma tus propias decisiones y busca asesoramiento profesional independiente si lo necesitas.</p>
+    <p>Este sitio no forma parte de Facebook ni de Meta Platforms, Inc. y no está respaldado por Meta de ninguna manera.</p>
+    <p>&copy; 2026 Mariah Trader</p>
+  </footer>
+</div>
+
+<!-- HiperLead: PageView no carregamento, convite + Lead só no clique -->
+<script>
+(function(){
+  var btn  = document.getElementById('main-telegram');
+  var label = btn.querySelector('.cta-label');
+  var note = document.getElementById('cta-note');
+  var TXT = {
+    idle: 'Únete a la comunidad en Telegram',
+    loading: 'Abriendo Telegram...',
+    retry: 'Intentar de nuevo',
+    noteIdle: 'Se abre en la app de Telegram. No se requiere ningún pago.',
+    noteError: 'Problema de conexión. Toca el botón para intentarlo de nuevo.'
+  };
+  var busy = false, failures = 0, lastLink = '';
+
+  function fbData(){
+    var fbc = hlGetCookie('_fbc');
+    if (!fbc) {
+      try {
+        var id = new URLSearchParams(location.search).get('fbclid');
+        if (id) fbc = 'fb.1.' + Date.now() + '.' + id;
+      } catch(e){}
+    }
+    return { fbp: hlGetCookie('_fbp') || undefined, fbc: fbc || undefined };
+  }
+
+  function post(path, body, ms){
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, ms) : null;
+    return fetch(HL.API + path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function(r){
+      if (timer) clearTimeout(timer);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }, function(err){
+      if (timer) clearTimeout(timer);
+      throw err;
+    });
+  }
+
+  function fireLead(clickId){
+    try {
+      if (typeof fbq === 'function') {
+        if (clickId) fbq('track', 'Lead', { content_name: 'telegram_cta' }, { eventID: clickId });
+        else fbq('track', 'Lead', { content_name: 'telegram_cta' });
+      }
+    } catch(e){}
+    try { if (window.ttq && typeof ttq.track === 'function') ttq.track('SubmitForm'); } catch(e){}
+    try { if (typeof gtag === 'function') gtag('event', 'generate_lead', { method: 'telegram' }); } catch(e){}
+    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'telegram_click' }); } catch(e){}
+  }
+
+  function setIdle(text){
+    busy = false;
+    btn.disabled = false;
+    label.textContent = text || TXT.idle;
+  }
+
+  function go(link){
+    setTimeout(function(){ window.location.href = link; }, 250);
+    setTimeout(function(){ setIdle(); note.textContent = TXT.noteIdle; }, 3000);
+  }
+
+  /* 1) PageView para o HiperLead (mesmo event_id do pixel = sem duplicar) */
+  try {
+    var f0 = fbData();
+    post('/track', {
+      public_id: HL.PUBLIC_ID,
+      event_type: 'pageview',
+      event_id: HL.PV_ID,
+      event_source_url: location.href,
+      fbp: f0.fbp,
+      fbc: f0.fbc
+    }, 8000).catch(function(){});
+  } catch(e){}
+
+  /* 2) Clique: pede o convite único e só então abre o Telegram */
+  btn.addEventListener('click', function(){
+    if (busy) return;
+    if (lastLink) { busy = true; btn.disabled = true; label.textContent = TXT.loading; go(lastLink); return; }
+
+    busy = true;
+    btn.disabled = true;
+    label.textContent = TXT.loading;
+    note.textContent = TXT.noteIdle;
+
+    var f = fbData();
+    post('/invite', {
+      public_id: HL.PUBLIC_ID,
+      event_source_url: location.href,
+      fbp: f.fbp,
+      fbc: f.fbc
+    }, 10000).then(function(data){
+      if (!data || !data.link) throw new Error('no link');
+      lastLink = data.link;
+      fireLead(data.fallback ? null : data.click_id);
+      go(data.link);
+    }).catch(function(){
+      failures++;
+      if (failures >= 2 && HL.EMERGENCY_LINK) {
+        fireLead(null);
+        lastLink = HL.EMERGENCY_LINK;
+        go(HL.EMERGENCY_LINK);
+        return;
+      }
+      setIdle(TXT.retry);
+      note.textContent = TXT.noteError;
+    });
+  });
+
+  /* Se a pessoa voltar para a página, o botão volta ao normal */
+  window.addEventListener('pageshow', function(){ setIdle(lastLink ? TXT.idle : null); });
+
+  /* Página pronta: libera o botão */
+  setIdle();
+})();
+</script>
+</body>
+</html>
